@@ -57,10 +57,10 @@ parallel (
     //         }
     //     }
     // }
-    "Mac (Xcode 12.4)": {
+    "Mac (Xcode 11.3)": {
         throttle(['provisions-mac-toolchain']) {
-            node ("xcode124") {
-                archive ("mac", "release", "Darwin", "", "", "", "xcode124")
+            node ("xcode113") {
+                archive ("mac", "release", "Darwin", "", "", "", "xcode113")
             }
         }
     }
