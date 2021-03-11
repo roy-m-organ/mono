@@ -15,41 +15,41 @@ if (monoBranch == 'master') {
 }
 
 parallel (
-    "Android Darwin (Debug)": {
-        throttle(['provisions-android-toolchain']) {
-            node ("osx-devices") {
-                archive ("android", "debug", "Darwin")
-            }
-        }
-    },
-    "Android Darwin (Release)": {
-        throttle(['provisions-android-toolchain']) {
-            node ("osx-devices") {
-                archive ("android", "release", "Darwin")
-            }
-        }
-    },
-    "Android Windows (Release)": {
-        throttle(['provisions-android-toolchain']) {
-            node ("w64") {
-                archive ("android", "release", "Windows")
-            }
-        }
-    },
-    "Android Linux (Debug)": {
-        throttle(['provisions-android-toolchain']) {
-            node ("debian-10-amd64-exclusive") {
-                archive ("android", "debug", "Linux", "debian-10-amd64multiarchi386-preview", "g++-mingw-w64 gcc-mingw-w64 lib32stdc++6 lib32z1 libz-mingw-w64-dev linux-libc-dev:i386 zlib1g-dev zlib1g-dev:i386 zulu-8 rsync python3-pip", "/mnt/scratch")
-            }
-        }
-    },
-    "Android Linux (Release)": {
-        throttle(['provisions-android-toolchain']) {
-            node ("debian-10-amd64-exclusive") {
-                archive ("android", "release", "Linux", "debian-10-amd64multiarchi386-preview", "g++-mingw-w64 gcc-mingw-w64 lib32stdc++6 lib32z1 libz-mingw-w64-dev linux-libc-dev:i386 zlib1g-dev zlib1g-dev:i386 zulu-8 rsync python3-pip", "/mnt/scratch")
-            }
-        }
-    },
+    // "Android Darwin (Debug)": {
+    //     throttle(['provisions-android-toolchain']) {
+    //         node ("osx-devices") {
+    //             archive ("android", "debug", "Darwin")
+    //         }
+    //     }
+    // },
+    // "Android Darwin (Release)": {
+    //     throttle(['provisions-android-toolchain']) {
+    //         node ("osx-devices") {
+    //             archive ("android", "release", "Darwin")
+    //         }
+    //     }
+    // },
+    // "Android Windows (Release)": {
+    //     throttle(['provisions-android-toolchain']) {
+    //         node ("w64") {
+    //             archive ("android", "release", "Windows")
+    //         }
+    //     }
+    // },
+    // "Android Linux (Debug)": {
+    //     throttle(['provisions-android-toolchain']) {
+    //         node ("debian-10-amd64-exclusive") {
+    //             archive ("android", "debug", "Linux", "debian-10-amd64multiarchi386-preview", "g++-mingw-w64 gcc-mingw-w64 lib32stdc++6 lib32z1 libz-mingw-w64-dev linux-libc-dev:i386 zlib1g-dev zlib1g-dev:i386 zulu-8 rsync python3-pip", "/mnt/scratch")
+    //         }
+    //     }
+    // },
+    // "Android Linux (Release)": {
+    //     throttle(['provisions-android-toolchain']) {
+    //         node ("debian-10-amd64-exclusive") {
+    //             archive ("android", "release", "Linux", "debian-10-amd64multiarchi386-preview", "g++-mingw-w64 gcc-mingw-w64 lib32stdc++6 lib32z1 libz-mingw-w64-dev linux-libc-dev:i386 zlib1g-dev zlib1g-dev:i386 zulu-8 rsync python3-pip", "/mnt/scratch")
+    //         }
+    //     }
+    // },
     "iOS (Xcode 11.3)": {
         throttle(['provisions-ios-toolchain']) {
             node ("xcode113") {
@@ -57,31 +57,31 @@ parallel (
             }
         }
     },
-    "Mac (Xcode 12.4)": {
+    "Mac (Xcode 11.3)": {
         throttle(['provisions-mac-toolchain']) {
-            node ("xcode124") {
-                archive ("mac", "release", "Darwin", "", "", "", "xcode124")
-            }
-        }
-    },
-    "Mac Catalyst (Xcode 12.4)": {
-        throttle(['provisions-mac-toolchain']) {
-            node ("xcode124") {
-                archive ("maccat", "release", "Darwin", "", "", "", "xcode124")
-            }
-        }
-    },
-    "WASM Linux": {
-        if (monoBranch != 'master') {
-            echo "Skipping WASM build on non-master branch."
-            return
-        }
-        throttle(['provisions-wasm-toolchain']) {
-            node ("ubuntu-1804-amd64") {
-                archive ("wasm", "release", "Linux", "ubuntu-1804-amd64-preview", "npm dotnet-sdk-2.1 nuget openjdk-8-jre python3-pip")
+            node ("xcode113") {
+                archive ("mac", "release", "Darwin", "", "", "", "xcode113")
             }
         }
     }
+    // "Mac Catalyst (Xcode 12.4)": {
+    //     throttle(['provisions-mac-toolchain']) {
+    //         node ("xcode124") {
+    //             archive ("maccat", "release", "Darwin", "", "", "", "xcode124")
+    //         }
+    //     }
+    // },
+    // "WASM Linux": {
+    //     if (monoBranch != 'master') {
+    //         echo "Skipping WASM build on non-master branch."
+    //         return
+    //     }
+    //     throttle(['provisions-wasm-toolchain']) {
+    //         node ("ubuntu-1804-amd64") {
+    //             archive ("wasm", "release", "Linux", "ubuntu-1804-amd64-preview", "npm dotnet-sdk-2.1 nuget openjdk-8-jre python3-pip")
+    //         }
+    //     }
+    // }
 )
 
 def archive (product, configuration, platform, chrootname = "", chrootadditionalpackages = "", chrootBindMounts = "", xcodeVersion = "") {
